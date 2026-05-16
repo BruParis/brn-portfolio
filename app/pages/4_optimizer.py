@@ -5,7 +5,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 import pandas as pd
 import plotly.graph_objects as go
@@ -17,8 +17,8 @@ from src.analytics.markowitz import (
     min_variance_portfolio,
 )
 from src.analytics.metrics import daily_returns
-from src.data.cac40 import CAC40_TICKERS, TICKERS
-from src.data.fetcher import fetch_prices
+from src.market.cac40 import CAC40_TICKERS, TICKERS
+from src.market.fetcher import fetch_prices
 
 st.set_page_config(page_title="Optimizer — BRN Portfolio", layout="wide")
 st.title("Markowitz Optimizer")

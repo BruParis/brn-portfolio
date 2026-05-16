@@ -33,22 +33,30 @@ This is a local tool — not a web service — designed for personal use and run
 brn-portfolio/
 ├── CLAUDE.md
 ├── pyproject.toml
+├── app/                            # Streamlit entrypoint (UI layer, not a library)
+│   ├── main.py                     # entry point (sidebar nav)
+│   └── pages/
+│       ├── 1_market.py             # CAC 40 overview + per-stock drill-down
+│       ├── 2_portfolio.py          # user portfolio input + current performance
+│       ├── 3_optimizer.py          # Markowitz params + efficient frontier chart
+│       ├── 4_advice.py             # current vs optimal allocation + rebalancing trades
+│       └── 5_history.py            # transaction history + dynamic portfolio view
 ├── data/
-│   └── cache/                  # parquet files with cached historical prices
-├── src/
-│   ├── data/
-│   │   ├── cac40.py            # CAC 40 ticker list with company names
-│   │   └── fetcher.py          # yfinance wrapper: fetch, cache, refresh logic
-│   ├── analytics/
-│   │   ├── metrics.py          # returns, volatility, Sharpe ratio, drawdown
-│   │   └── markowitz.py        # efficient frontier, min-variance, max-Sharpe
-│   └── app/
-│       ├── main.py             # Streamlit entry point (sidebar nav)
-│       └── pages/
-│           ├── 1_market.py     # CAC 40 overview + per-stock drill-down
-│           ├── 2_portfolio.py  # user portfolio input + current performance
-│           ├── 3_optimizer.py  # Markowitz params + efficient frontier chart
-│           └── 4_advice.py     # current vs optimal allocation + rebalancing trades
+│   ├── cache/                      # parquet files with cached historical prices
+│   └── historic.csv                # broker export of past transactions
+├── scripts/                        # CLI utilities (not part of the library)
+│   ├── fetch_prices.py
+│   └── run_optimizer.py
+└── src/                            # installable library (analytics + market data)
+    ├── analytics/
+    │   ├── holdings.py             # positions, cost basis, value series from transactions
+    │   ├── markowitz.py            # efficient frontier, min-variance, max-Sharpe
+    │   └── metrics.py              # returns, volatility, Sharpe ratio, drawdown
+    └── market/
+        ├── cac40.py                # CAC 40 ticker list with company names
+        ├── fetcher.py              # yfinance wrapper: fetch, cache, refresh logic
+        ├── glossary.py             # company metadata + broker name resolution
+        └── history.py              # transaction CSV loader
 ```
 
 ---
@@ -147,7 +155,7 @@ Portfolio input is done interactively on **Page 2 — Portfolio** via a Streamli
 
 ```bash
 source .venv/bin/activate
-streamlit run src/app/main.py
+streamlit run app/main.py
 ```
 
 ---

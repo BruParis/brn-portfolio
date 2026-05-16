@@ -6,9 +6,9 @@ import json
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-_PORTFOLIO_FILE = Path(__file__).resolve().parents[3] / "data" / "portfolio.json"
+_PORTFOLIO_FILE = Path(__file__).resolve().parents[2] / "data" / "portfolio.json"
 
 
 def _load_portfolio() -> list[dict] | None:
@@ -37,8 +37,8 @@ from src.analytics.metrics import (
     portfolio_returns,
     sharpe_ratio,
 )
-from src.data.cac40 import CAC40_TICKERS, DISPLAY_OPTIONS, DISPLAY_TO_TICKER, TICKER_TO_DISPLAY
-from src.data.fetcher import fetch_prices
+from src.market.cac40 import CAC40_TICKERS, DISPLAY_OPTIONS, DISPLAY_TO_TICKER, TICKER_TO_DISPLAY
+from src.market.fetcher import fetch_prices
 
 st.set_page_config(page_title="Portfolio — BRN Portfolio", layout="wide")
 st.title("My Portfolio")

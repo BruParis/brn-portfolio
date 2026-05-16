@@ -15,8 +15,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import pandas as pd
 
-from src.data.cac40 import CAC40_TICKERS
-from src.data.fetcher import fetch_prices
+from src.market.cac40 import CAC40_TICKERS
+from src.market.fetcher import fetch_prices
 
 
 def main() -> None:

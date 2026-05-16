@@ -26,8 +26,8 @@ from src.analytics.markowitz import (
     min_variance_portfolio,
 )
 from src.analytics.metrics import daily_returns
-from src.data.cac40 import CAC40_TICKERS, TICKERS
-from src.data.fetcher import fetch_prices
+from src.market.cac40 import CAC40_TICKERS, TICKERS
+from src.market.fetcher import fetch_prices
 
 
 def main() -> None:

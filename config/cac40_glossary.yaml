@@ -1,0 +1,271 @@
+---
+# CAC 40 Company Glossary
+# Fields per entry:
+#   ticker      : Yahoo Finance ticker (primary key)
+#   name        : Official full name
+#   abbrevs     : Common abbreviations / shorthands used in financial media
+#   sector      : GICS sector
+#   description : One-line plain-language description
+#   broker_aliases: Raw name strings as exported by brokers (mangled, no spaces, etc.)
+
+companies:
+  - ticker: AC.PA
+    name: Accor
+    abbrevs: [ACC]
+    sector: Consumer Discretionary
+    description: French multinational hospitality company operating hotels worldwide.
+
+  - ticker: AI.PA
+    name: Air Liquide
+    abbrevs: [AL, AIQ]
+    broker_aliases: [AIRLIQUIDE, "AIR LIQUIDE"]
+    sector: Materials
+    description: Global supplier of industrial gases and related services.
+
+  - ticker: AIR.PA
+    name: Airbus
+    abbrevs: [AIR, EADS]
+    broker_aliases: [AIRBUS]
+    sector: Industrials
+    description: European aerospace and defence corporation; largest aircraft manufacturer by orders.
+
+  - ticker: ALO.PA
+    name: Alstom
+    abbrevs: [ALO]
+    sector: Industrials
+    description: French rolling stock and rail transport systems manufacturer.
+
+  - ticker: MT.AS
+    name: ArcelorMittal
+    abbrevs: [MT, ARCMT]
+    broker_aliases: [ARCELORMITTAL, "ARCELOR MITTAL"]
+    sector: Materials
+    description: World's largest steel and mining company, headquartered in Luxembourg.
+
+  - ticker: CS.PA
+    name: AXA
+    abbrevs: [AXA, CS]
+    sector: Financials
+    description: French multinational insurance and financial services firm.
+
+  - ticker: BNP.PA
+    name: BNP Paribas
+    abbrevs: [BNP, BNPP]
+    sector: Financials
+    description: Largest French banking group by total assets.
+
+  - ticker: EN.PA
+    name: Bouygues
+    abbrevs: [BYG, EN]
+    sector: Industrials
+    description: French industrial conglomerate active in construction, telecoms, and media.
+
+  - ticker: CAP.PA
+    name: Capgemini
+    abbrevs: [CAP, CGM]
+    sector: Information Technology
+    description: French multinational IT services and consulting corporation.
+
+  - ticker: CA.PA
+    name: Carrefour
+    abbrevs: [CA, CRF]
+    broker_aliases: [CARREFOUR]
+    sector: Consumer Staples
+    description: French multinational retail corporation and one of the world's largest supermarket chains.
+
+  - ticker: ACA.PA
+    name: Crédit Agricole
+    abbrevs: [ACA, CA, CRAG]
+    sector: Financials
+    description: French cooperative banking group; second-largest bank in France.
+
+  - ticker: BN.PA
+    name: Danone
+    abbrevs: [BN, DAN]
+    broker_aliases: [DANONE]
+    sector: Consumer Staples
+    description: French multinational food-products corporation specialising in dairy and plant-based products.
+
+  - ticker: DSY.PA
+    name: Dassault Systèmes
+    abbrevs: [DSY, DS]
+    broker_aliases: [DASSAULTSYSTEMES, "DASSAULT SYSTEMES", "DASSAULT SYSTÈMES"]
+    sector: Information Technology
+    description: French software company specialising in 3D design, simulation, and PLM software (CATIA, SOLIDWORKS).
+
+  - ticker: ENGI.PA
+    name: Engie
+    abbrevs: [ENGI, GDF]
+    sector: Utilities
+    description: French multinational electric utility company; formerly GDF Suez.
+
+  - ticker: EL.PA
+    name: EssilorLuxottica
+    abbrevs: [EL, ESL]
+    broker_aliases: [ESSILORLUXOTTICA, SSILORLUXOTTICA, "ESSILOR LUXOTTICA"]
+    sector: Consumer Discretionary
+    description: Italian-French eyewear conglomerate formed by the merger of Essilor and Luxottica.
+
+  - ticker: ERF.PA
+    name: Eurofins Scientific
+    abbrevs: [ERF, EFS]
+    sector: Health Care
+    description: International life-sciences testing and laboratory services company.
+
+  - ticker: RMS.PA
+    name: Hermès
+    abbrevs: [RMS, HMI]
+    broker_aliases: [HERMES, ERMESINTERNATIONAL, HERMESINTERNATIONAL, "HERMES INTERNATIONAL", "HERMÈS INTERNATIONAL"]
+    sector: Consumer Discretionary
+    description: French luxury goods manufacturer known for leather goods, fashion, and accessories.
+
+  - ticker: KER.PA
+    name: Kering
+    abbrevs: [KER, PPR]
+    broker_aliases: [KERING]
+    sector: Consumer Discretionary
+    description: French luxury group owning brands such as Gucci, Saint Laurent, and Bottega Veneta; formerly PPR.
+
+  - ticker: LR.PA
+    name: Legrand
+    abbrevs: [LR, LEG]
+    broker_aliases: [LEGRAND]
+    sector: Industrials
+    description: French industrial group specialising in electrical and digital infrastructure.
+
+  - ticker: OR.PA
+    name: L'Oréal
+    abbrevs: [OR, LOreal]
+    broker_aliases: ["L'OREAL", LOREAL, "L'ORÉAL", LOREALSAINTEEUPHEMIE]
+    sector: Consumer Staples
+    description: World's largest cosmetics and beauty company.
+
+  - ticker: MC.PA
+    name: LVMH
+    abbrevs: [MC, LVMH, LVM]
+    broker_aliases: [LVMHMOETHENNESSY, "LVMH MOET HENNESSY", LVMHMOETHENNESSYVUITTON, "LVMHMOET HENNESSY VUITTON", "VMHMOET HENNESSY VUITTON", VMHMOETHENNESSYVUITTON]
+    sector: Consumer Discretionary
+    description: French luxury conglomerate and world's largest luxury goods company (Louis Vuitton, Moët, Hennessy).
+
+  - ticker: ML.PA
+    name: Michelin
+    abbrevs: [ML, MICP]
+    broker_aliases: [MICHELIN, CGDEMICHELINCIE, "CIE GENERALE DES ETABLISSEMENTS MICHELIN"]
+    sector: Consumer Discretionary
+    description: French multinational tyre manufacturer; world's second-largest tyre company.
+
+  - ticker: ORA.PA
+    name: Orange
+    abbrevs: [ORA, FTE]
+    sector: Communication Services
+    description: French multinational telecommunications corporation; formerly France Télécom.
+
+  - ticker: RI.PA
+    name: Pernod Ricard
+    abbrevs: [RI, PR]
+    sector: Consumer Staples
+    description: French multinational alcoholic beverages company; world's second-largest spirits producer.
+
+  - ticker: PUB.PA
+    name: Publicis Groupe
+    abbrevs: [PUB, PG]
+    sector: Communication Services
+    description: French multinational advertising and public-relations company; one of the world's largest agency groups.
+
+  - ticker: RNO.PA
+    name: Renault
+    abbrevs: [RNO, RNL]
+    sector: Consumer Discretionary
+    description: French automobile manufacturer; partner in the Renault–Nissan–Mitsubishi Alliance.
+
+  - ticker: SAF.PA
+    name: Safran
+    abbrevs: [SAF, SFR]
+    sector: Industrials
+    description: French aerospace and defence equipment manufacturer (CFM engines, landing systems, avionics).
+
+  - ticker: SGO.PA
+    name: Saint-Gobain
+    abbrevs: [SGO, SG]
+    broker_aliases: [SAINTGOBAIN, "SAINT-GOBAIN", "SAINT GOBAIN", COMPAGNIEDESSAINTGOBAIN]
+    sector: Industrials
+    description: French multinational specialising in construction materials (glass, insulation, mortars).
+
+  - ticker: SAN.PA
+    name: Sanofi
+    abbrevs: [SAN, SNY]
+    sector: Health Care
+    description: French multinational pharmaceutical company; one of the world's largest by revenue.
+
+  - ticker: SU.PA
+    name: Schneider Electric
+    abbrevs: [SU, SE, SCHN]
+    broker_aliases: [SCHNEIDERELECTRIC, "SCHNEIDER ELECTRIC", SCHNEIDERELECTRICSE]
+    sector: Industrials
+    description: French multinational specialising in energy management and industrial automation.
+
+  - ticker: GLE.PA
+    name: Société Générale
+    abbrevs: [GLE, SG, SOCGEN]
+    sector: Financials
+    description: French multinational investment bank and financial services company.
+
+  - ticker: STLAM.MI
+    name: Stellantis
+    abbrevs: [STLAM, STLA]
+    broker_aliases: [STELLANTIS, STELLANTISNV]
+    sector: Consumer Discretionary
+    description: Multinational automotive manufacturer formed from the merger of PSA Group and Fiat Chrysler.
+
+  - ticker: STMPA.PA
+    name: STMicroelectronics
+    abbrevs: [STMPA, STM]
+    sector: Information Technology
+    description: Franco-Italian multinational semiconductor manufacturer.
+
+  - ticker: AKE.PA
+    name: Arkema
+    abbrevs: [AKE, AK]
+    broker_aliases: [ARKEMA]
+    sector: Materials
+    description: French specialty chemicals and advanced materials company.
+
+  - ticker: ENX.PA
+    name: Euronext
+    abbrevs: [ENX, ENT]
+    broker_aliases: [EURONEXT, EURONEXTNV]
+    sector: Financials
+    description: Pan-European stock exchange operator (Paris, Amsterdam, Brussels, Dublin, Lisbon, Oslo, Milan).
+
+  - ticker: HO.PA
+    name: Thales
+    abbrevs: [HO, THA]
+    sector: Industrials
+    description: French multinational operating in defence, aerospace, digital security, and transport.
+
+  - ticker: TTE.PA
+    name: TotalEnergies
+    abbrevs: [TTE, TOT, TE]
+    broker_aliases: [TOTALENERGIES, TOTALENERGIESSE, "TOTALENERGIES SE", "TOTAL ENERGIES"]
+    sector: Energy
+    description: French multinational integrated energy company; formerly Total SA.
+
+  - ticker: URW.PA
+    name: Unibail-Rodamco-Westfield
+    abbrevs: [URW, URW, UNBL]
+    sector: Real Estate
+    description: European commercial real estate company specialising in large shopping centres.
+
+  - ticker: VIE.PA
+    name: Veolia
+    abbrevs: [VIE, VEO]
+    broker_aliases: [VEOLIA, VEOLIAENVIRONNEMENT, VEOLIAENVIRONNEMENTSA, "VEOLIA ENVIRONNEMENT"]
+    sector: Utilities
+    description: French transnational company and world leader in optimised resource management (water, waste, energy).
+
+  - ticker: DG.PA
+    name: Vinci
+    abbrevs: [DG, VIN]
+    broker_aliases: [VINCI]
+    sector: Industrials
+    description: French concessions and construction group; one of the world's largest infrastructure companies.

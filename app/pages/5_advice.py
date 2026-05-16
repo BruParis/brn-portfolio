@@ -5,14 +5,14 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
-from src.data.cac40 import CAC40_TICKERS
-from src.data.fetcher import fetch_prices
+from src.market.cac40 import CAC40_TICKERS
+from src.market.fetcher import fetch_prices
 
 st.set_page_config(page_title="Advice — BRN Portfolio", layout="wide")
 st.title("Rebalancing Advice")
