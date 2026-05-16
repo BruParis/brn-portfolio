@@ -1,4 +1,4 @@
-"""Page 3 — Markowitz optimizer: efficient frontier and optimal weights."""
+"""Page 4 — Optimizer: Markowitz or Mean-CVaR efficient frontier."""
 
 from __future__ import annotations
 
@@ -12,8 +12,11 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from src.analytics.markowitz import (
+    compute_cvar_frontier,
     compute_efficient_frontier,
+    max_return_cvar_portfolio,
     max_sharpe_portfolio,
+    min_cvar_portfolio,
     min_variance_portfolio,
 )
 from src.analytics.metrics import daily_returns
@@ -21,17 +24,24 @@ from src.market.cac40 import CAC40_TICKERS, TICKERS
 from src.market.fetcher import fetch_prices
 
 st.set_page_config(page_title="Optimizer — BRN Portfolio", layout="wide")
-st.title("Markowitz Optimizer")
+st.title("Portfolio Optimizer")
 
 # ── Sidebar parameters ─────────────────────────────────────────────────────────
 st.sidebar.header("Optimizer Parameters")
+
+framework = st.sidebar.radio("Framework", options=["Markowitz", "Mean-CVaR"])
 
 lookback = st.sidebar.selectbox("Lookback window", options=["1y", "3y", "5y"], index=1)
 lookback_years = {"1y": 1, "3y": 3, "5y": 5}[lookback]
 
 risk_free = st.sidebar.number_input("Risk-free rate (%)", value=3.0, step=0.1) / 100
 
-objective = st.sidebar.radio("Objective", options=["Max Sharpe", "Min Variance"])
+if framework == "Markowitz":
+    objective = st.sidebar.radio("Objective", options=["Max Sharpe", "Min Variance"])
+    cvar_alpha = None
+else:
+    objective = st.sidebar.radio("Objective", options=["Max Return/CVaR", "Min CVaR"])
+    cvar_alpha = st.sidebar.slider("CVaR confidence level (%)", 90, 99, 95) / 100
 
 min_w = st.sidebar.slider("Min weight per stock (%)", 0, 20, 0) / 100
 max_w = st.sidebar.slider("Max weight per stock (%)", 5, 100, 20) / 100
@@ -91,25 +101,39 @@ if st.button("Run Optimizer", type="primary", use_container_width=True):
     returns = daily_returns(prices)
 
     with st.spinner("Computing efficient frontier…"):
-        frontier = compute_efficient_frontier(
-            returns, n_points=n_frontier, min_weight=min_w, max_weight=max_w
-        )
-        if objective == "Max Sharpe":
-            optimal = max_sharpe_portfolio(
-                returns, risk_free_rate=risk_free, min_weight=min_w, max_weight=max_w
+        if framework == "Markowitz":
+            frontier = compute_efficient_frontier(
+                returns, n_points=n_frontier, min_weight=min_w, max_weight=max_w
             )
+            if objective == "Max Sharpe":
+                optimal = max_sharpe_portfolio(
+                    returns, risk_free_rate=risk_free, min_weight=min_w, max_weight=max_w
+                )
+            else:
+                optimal = min_variance_portfolio(returns, min_weight=min_w, max_weight=max_w)
         else:
-            optimal = min_variance_portfolio(returns, min_weight=min_w, max_weight=max_w)
+            frontier = compute_cvar_frontier(
+                returns, n_points=n_frontier, alpha=cvar_alpha, min_weight=min_w, max_weight=max_w
+            )
+            if objective == "Max Return/CVaR":
+                optimal = max_return_cvar_portfolio(
+                    returns, alpha=cvar_alpha, min_weight=min_w, max_weight=max_w
+                )
+            else:
+                optimal = min_cvar_portfolio(
+                    returns, alpha=cvar_alpha, min_weight=min_w, max_weight=max_w
+                )
 
     st.session_state["optimizer_results"] = {
         "frontier": frontier,
         "optimal": optimal,
         "risk_free": risk_free,
         "objective": objective,
+        "framework": framework,
+        "cvar_alpha": cvar_alpha,
         "tickers": list(prices.columns),
         "optimal_weights": optimal.weights.to_dict(),
     }
-    # Also persist for advice page
     st.session_state["optimal_weights"] = optimal.weights.to_dict()
     st.session_state["optimizer_tickers"] = list(prices.columns)
 
@@ -124,9 +148,15 @@ frontier = results["frontier"]
 optimal = results["optimal"]
 stored_risk_free = results["risk_free"]
 stored_objective = results["objective"]
+stored_framework = results["framework"]
+stored_alpha = results.get("cvar_alpha")
 
-# ── Efficient frontier chart ────────────────────────────────────────────────────
-st.subheader("Efficient Frontier")
+is_cvar = stored_framework == "Mean-CVaR"
+x_label = f"Annualised CVaR ({stored_alpha:.0%})" if is_cvar else "Annualised Volatility"
+frontier_name = "Mean-CVaR Frontier" if is_cvar else "Efficient Frontier"
+
+# ── Frontier chart ─────────────────────────────────────────────────────────────
+st.subheader(frontier_name)
 
 risks = [p.risk for p in frontier]
 rets = [p.ret for p in frontier]
@@ -134,9 +164,7 @@ rets = [p.ret for p in frontier]
 hover_texts = []
 for p in frontier:
     top5 = p.weights.nlargest(5)
-    text = "<br>".join(
-        f"{CAC40_TICKERS.get(t, t)}: {w:.1%}" for t, w in top5.items()
-    )
+    text = "<br>".join(f"{CAC40_TICKERS.get(t, t)}: {w:.1%}" for t, w in top5.items())
     hover_texts.append(text)
 
 fig = go.Figure()
@@ -146,7 +174,7 @@ fig.add_trace(
         x=risks,
         y=rets,
         mode="lines+markers",
-        name="Efficient Frontier",
+        name=frontier_name,
         marker=dict(size=4, color="steelblue"),
         line=dict(color="steelblue"),
         text=hover_texts,
@@ -166,7 +194,7 @@ fig.add_trace(
 )
 
 fig.update_layout(
-    xaxis_title="Annualised Volatility",
+    xaxis_title=x_label,
     yaxis_title="Annualised Return",
     xaxis_tickformat=".0%",
     yaxis_tickformat=".0%",
@@ -191,9 +219,15 @@ st.dataframe(
 
 # ── Key metrics ────────────────────────────────────────────────────────────────
 st.subheader("Optimal Portfolio Metrics")
-sharpe_opt = (optimal.ret - stored_risk_free) / optimal.risk if optimal.risk > 0 else 0
 
 m1, m2, m3 = st.columns(3)
 m1.metric("Expected Return (ann.)", f"{optimal.ret:.1%}")
-m2.metric("Volatility (ann.)", f"{optimal.risk:.1%}")
-m3.metric("Sharpe Ratio", f"{sharpe_opt:.2f}")
+
+if is_cvar:
+    m2.metric(f"CVaR {stored_alpha:.0%} (ann.)", f"{optimal.risk:.1%}")
+    starr = optimal.ret / optimal.risk if optimal.risk > 0 else 0.0
+    m3.metric("Return / CVaR ratio", f"{starr:.2f}")
+else:
+    sharpe_opt = (optimal.ret - stored_risk_free) / optimal.risk if optimal.risk > 0 else 0
+    m2.metric("Volatility (ann.)", f"{optimal.risk:.1%}")
+    m3.metric("Sharpe Ratio", f"{sharpe_opt:.2f}")
